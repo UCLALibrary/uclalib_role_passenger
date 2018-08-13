@@ -11,7 +11,7 @@ This role assumes Apache HTTPD and Ruby are already installed on the system.
 Role Variables
 --------------
 
-* passenger_version - defines the version of Passenger to install on the system
+* `passenger_version` - defines the version of Passenger to install on the system
 
 Dependencies
 ------------
