@@ -15,9 +15,8 @@
 
 - name: Ensure packages needed to build Passenger Apache module are installed
   yum:
-    name: "{{ item }}"
+    name: "{{ apachemod_build_packages }}"
     state: present
-  with_items: "{{ apachemod_build_packages }}"
 
 - name: Install Passenger Apache HTTPD Module
   command: >
