@@ -18,15 +18,11 @@
     name: "{{ apachemod_build_packages }}"
     state: present
 
-###
-- command: >
-    env
-  environment:
-    PATH: '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin'
-    look_for_me: '*** HERE I AM ***'
-  register: env_out
-- debug: var=env_out
-###
+- name: Ensure excluded packages needed to build Passenger Apache module are installed
+  yum:
+    name: "{{ apachemod_excluded_build_packages }}"
+    state: present
+    disable_excludes: main
 
 - name: Install Passenger Apache HTTPD Module
   command: >
