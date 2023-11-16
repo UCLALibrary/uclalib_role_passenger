@@ -18,15 +18,29 @@
     name: "{{ apachemod_build_packages }}"
     state: present
 
+###
+- command: >
+    env
+  environment:
+    PATH: '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin'
+    look_for_me: '*** HERE I AM ***'
+  register: env_out
+- debug: var=env_out
+###
+
 - name: Install Passenger Apache HTTPD Module
   command: >
     passenger-install-apache2-module --auto
     creates={{ system_gem_path.stdout }}/gems/passenger-{{ passenger_version }}/buildout/apache2/mod_passenger.so
+  environment:
+    PATH: '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin'
   register: passenger_mod_install_status
 
 - name: Generate Passenger Apache HTTPD config file
   command: >
     passenger-install-apache2-module --snippet
+  environment:
+    PATH: '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin'
   when: passenger_mod_install_status.changed == true
   register: passenger_config
 
