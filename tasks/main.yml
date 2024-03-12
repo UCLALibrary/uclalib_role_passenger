@@ -18,15 +18,25 @@
     name: "{{ apachemod_build_packages }}"
     state: present
 
+- name: Ensure excluded packages needed to build Passenger Apache module are installed
+  yum:
+    name: "{{ apachemod_excluded_build_packages }}"
+    state: present
+    disable_excludes: main
+
 - name: Install Passenger Apache HTTPD Module
   command: >
     passenger-install-apache2-module --auto
     creates={{ system_gem_path.stdout }}/gems/passenger-{{ passenger_version }}/buildout/apache2/mod_passenger.so
+  environment:
+    PATH: '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin'
   register: passenger_mod_install_status
 
 - name: Generate Passenger Apache HTTPD config file
   command: >
     passenger-install-apache2-module --snippet
+  environment:
+    PATH: '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin'
   when: passenger_mod_install_status.changed == true
   register: passenger_config
 

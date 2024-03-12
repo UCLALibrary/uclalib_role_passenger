@@ -12,4 +12,7 @@ apachemod_build_packages:
   - libcurl-devel
   - gcc-c++
 
+apachemod_excluded_build_packages:
+  - ruby-devel
+
 passenger_inst_reg_dir: "/var/run"
